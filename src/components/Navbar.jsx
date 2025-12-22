@@ -68,7 +68,7 @@ const Navbar = () => {
     return (
         <>
             <header className={`${themeToggle ? '' : 'dark'} `}>
-                <div ref={navRef} className="nav-container bg-light px-5 sm:px-10 md:px-20 py-3 md:py-6 flex justify-between items-center text-secondary font-[Poppins] shadow-xl z-10 dark:shadow-white dark:bg-black dark:text-primary ">
+                <div ref={navRef} className="nav-container bg-light px-5 sm:px-10 md:px-20 py-3 md:py-6 flex justify-between items-center text-secondary font-[Poppins] shadow-xl dark:shadow-lg z-10 dark:shadow-white dark:bg-black dark:text-primary ">
                     <div className="nav-logo font-[Amita] font-bold text-2xl md:text-4xl bg-[linear-gradient(to_right,#0D4715_20%,#fff_40%,#fff_60%,#0D4715_80%)] dark:bg-[linear-gradient(to_right,#E9762B_20%,#fff_40%,#fff_60%,#E9762B_80%)]">
                         Namoजपं
                     </div>
