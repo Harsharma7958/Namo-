@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { useTheme } from '../store/ThemeContext';
 
 const Navbar = () => {
 
-    const [themeToggle, setThemeToggle] = useState(() => {
-        const saved = localStorage.getItem('theme');
-        return saved === null ? true : saved === 'light';
-    });
+    const {themeToggle, themeToggleFun} = useTheme();
+    
     const [menuToggle, setMenuToggle] = useState(false);
 
     const handleMenu = () => {
@@ -17,10 +16,7 @@ const Navbar = () => {
 
     const themeToggleRef = useRef()
 
-    const themeToggleFun = () => {
-        setThemeToggle(prev => !prev);
-    }
-
+    
     useEffect(() => {
         const themename = themeToggle ? 'light' : 'dark';
         localStorage.setItem('theme', themename);
@@ -68,7 +64,7 @@ const Navbar = () => {
     return (
         <>
             <header className={`${themeToggle ? '' : 'dark'} `}>
-                <div ref={navRef} className="nav-container bg-light px-5 sm:px-10 md:px-20 py-3 md:py-6 flex justify-between items-center text-secondary font-[Poppins] shadow-xl dark:shadow-lg z-10 dark:shadow-white dark:bg-black dark:text-primary ">
+                <div ref={navRef} className="nav-container bg-light px-5 sm:px-10 md:px-20 py-3 md:py-6 flex justify-between items-center text-secondary font-[Poppins] shadow-[0px_0px_20px_0px] dark:shadow-[0px_0px_20px_0px] z-10 dark:shadow-white dark:bg-black dark:text-primary fixed top-0 right-0 left-0">
                     <div className="nav-logo font-[Amita] font-bold text-2xl md:text-4xl bg-[linear-gradient(to_right,#0D4715_20%,#fff_40%,#fff_60%,#0D4715_80%)] dark:bg-[linear-gradient(to_right,#E9762B_20%,#fff_40%,#fff_60%,#E9762B_80%)]">
                         Namoजपं
                     </div>
@@ -81,13 +77,13 @@ const Navbar = () => {
                                 <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
                             </svg>
                         </div>
-                        <div className="menu-icon relative z-10" onClick={handleMenu}>
+                        <div className="menu-icon relative z-50" onClick={handleMenu}>
                             <hr className={`${menuToggle ? 'hidden' : 'block'} bg-secondary  transition-all duration-700 dark:bg-primary h-1 w-7 rounded-full`} />
                             <hr className={`${menuToggle ? 'my-0 rotate-130' : 'my-1'} bg-secondary  transition-all duration-300 dark:bg-primary h-1 w-7 rounded-full`} />
                             <hr className={`${menuToggle ? 'rotate-45 absolute top-0' : 'rotate-0'} bg-secondary  transition-all duration-300 dark:bg-primary h-1 w-7 rounded-full`} />
 
                         </div>
-                        <div className={` nav-link-mobile absolute top-0 p-7 w-full bg-[rgba(255,255,255,0.3)] dark:bg-[rgba(0,0,0,0.5)] backdrop-blur-xs min-h-screen max-h-screen`} ref={menuRef}>
+                        <div className={` nav-link-mobile absolute top-0 p-7 w-full bg-[rgba(255,255,255,0.3)] dark:bg-[rgba(0,0,0,0.5)] backdrop-blur-xs min-h-screen max-h-scree  z-40`} ref={menuRef}>
                             <ul className='flex flex-col gap-4 items-center'>
                                 {['home', 'about', 'counter', 'contact', 'developer'].map((element, i) => {
                                     return (

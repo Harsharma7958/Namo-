@@ -11,9 +11,14 @@
   --color-light: #EBE1D1;
 }
 
-html, body {
+html,
+body {
   @apply overflow-x-hidden;
 }
+
+
+
+
 
 /***** Navbar ******/
 
@@ -25,11 +30,14 @@ html, body {
   animation: animate 3s linear infinite;
 }
 
-@keyframes animate{
-  0%{
+@keyframes animate {
+  0% {
     background-position: 200% center
-  };
-  100%{
+  }
+
+  ;
+
+  100% {
     background-position: -200% center
   }
 }
@@ -61,8 +69,60 @@ html, body {
 /***** Home Page ****/
 
 .home-container {
-  background-image: radial-gradient(circle at center, #ffae42 0%, #ff4500 100%);
-  background-color: #ff4500;
+  /* background-image: radial-gradient(circle at center, #ffae42 0%, #ff4500 100%); */
+  /* background-color: #ff4500; */
 }
+
+@theme {
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      text-shadow:
+        0 0 10px #000,
+        0 0 20px #E9762B,
+        0 0 30px #E9762B;
+    }
+
+    50% {
+      text-shadow:
+        0 0 20px #fff,
+        0 0 40px #E9762B,
+        0 0 60px #E9762B,
+        0 0 80px #E9762B;
+    }
+  }
+}
+
+
+@theme {
+  --animate-pulse-glow2: pulse-glow2 2s ease-in-out infinite;
+
+  @keyframes pulse-glow2 {
+
+    0%,
+    100% {
+      text-shadow:
+        0 0 10px #000,
+        0 0 20px #E9762B,
+        0 0 30px #E9762B;
+
+
+    }
+
+    50% {
+      text-shadow:
+        0 0 20px #0D4715,
+        0 0 40px #E9762B,
+        0 0 60px #E9762B,
+        0 0 80px #E9762B;
+    }
+  }
+}
+
+
+
 
 /**** END Home *****/

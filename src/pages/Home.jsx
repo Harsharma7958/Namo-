@@ -1,40 +1,33 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
+import ProgressRing from '../components/ProgressRing';
+import MovingStars from '../components/MovingStars'
+import { useTheme } from '../store/ThemeContext';
 
 const Home = () => {
 
-    const [speech, useSpeech] = useState(new SpeechSynthesisUtterance());
-    let voices = [];
+    const [speech, setSpeech] = useState(new SpeechSynthesisUtterance());
+    const [name, setName] = useState("राधा...")
+    const [voices, setVoices] = useState([]);
+    const [pause, setPause] = useState(true);
+    const [count, setCount] = useState(0);
 
-    const handleSpeech = () => {
-
-        speech.text = "राधा...";
-        speech.pitch = 0.8;
-        speech.rate = 0.7
-        speech.voice = voices[12];
-
-        window.speechSynthesis.speak(speech);
-
-    }
-
-    // let voiceSelect = document.querySelector(".have")
+    const { themeToggle } = useTheme()
 
     const voiceSelectRef = useRef(null);
 
     useEffect(() => {
         if (voiceSelectRef.current) {
             window.speechSynthesis.onvoiceschanged = () => {
-                voices = window.speechSynthesis.getVoices();
+                setVoices(window.speechSynthesis.getVoices());
                 if (voices.length > 0) {
-                    speech.voice = voices[12];
+                    speech.voice = voices.find(voice => voice.name === "Google हिन्दी" && voice.lang === "hi-IN");
                 }
             }
         }
-
         return () => {
-            window.speechSynthesis.onvoiceschanged = null;
+            window.speechSynthesis.onvoiceschanged = null
         };
     }, [])
-
 
     const handleVoice = () => {
         if (voiceSelectRef.current) {
@@ -42,13 +35,100 @@ const Home = () => {
         }
     }
 
+    const handleName = (e) => {
+        // console.log(e.target.value);
+        setName(e.target.value || "राधा...");
+
+    }
+
+    const handlePlaySpeech = () => {
+        let currentIteration = 0;
+        const maxIteration = 108;
+
+        setCount(0);
+
+        const speakMantra = () => {
+
+            if (currentIteration >= maxIteration) return;
+
+            speech.text = name;
+            console.log(speech.text)
+            speech.pitch = 0.8;
+            speech.rate = 0.7
+            // console.log(voices)
+            speech.voice = voices.find(voice => voice.name === "Google हिन्दी" && voice.lang === "hi-IN");
+            console.log(speech.voice)
+
+            speech.onend = () => {
+                currentIteration++;
+                setCount(currentIteration);
+                speakMantra();
+            }
+            window.speechSynthesis.speak(speech);
+
+        }
+        window.speechSynthesis.cancel();
+        speakMantra();
+    }
+
+    const handlePauseSpeech = () => {
+        console.log('paused')
+        window.speechSynthesis.pause();
+        setPause(prev => !prev);
+    }
+
+    const handleResumeSpeech = () => {
+        console.log('resume');
+        window.speechSynthesis.resume();
+        setPause(prev => !prev);
+    }
+
+    const handleReset = () => {
+        setCount(0)
+        window.speechSynthesis.cancel();
+        setName('राधा...')
+        setPause(true)
+    }
+
+    const randomeNumberGenerate = () => {
+        console.log(Math.floor(Math.random() * 1000))
+        return Math.floor(Math.random() * 1000);
+
+    }
+
     return (
         <>
+        <MovingStars /> 
             <section>
-                <div className='home-container min-h-full'>
-                    <select ref={voiceSelectRef} onChange={handleVoice} hidden></select>
-                    <button onClick={handleSpeech}>Play now</button>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In ea eveniet soluta quia cum, eos aspernatur sapiente doloremque ducimus error saepe alias, dolorem velit corrupti, natus autem! Recusandae libero, debitis fuga quidem possimus eos facere impedit modi cumque temporibus corporis vel aliquam quos quam provident tempore. Obcaecati, magnam minus ut rerum, temporibus eos magni similique tempore aliquam enim esse accusantium. Quisquam quia odio pariatur debitis iste. Dolorem error, ullam nulla expedita soluta, in repellat deserunt blanditiis labore voluptatem dignissimos. Quisquam consectetur iure eveniet eum repellendus, at aspernatur perferendis assumenda non, alias necessitatibus provident deleniti odio veritatis cum minima eligendi. Omnis perspiciatis, reprehenderit labore molestiae veniam aliquid maxime hic quis adipisci voluptatibus, aut architecto incidunt eum, quia sed iure consequuntur cumque deleniti. Accusamus culpa odio consequatur numquam corporis voluptates repellendus sit eum eligendi aliquid maxime assumenda, doloribus tempore quae doloremque, sapiente magnam consequuntur! Nesciunt sint sequi sunt. Optio at molestiae eveniet dolores velit iste vel? Mollitia tempora, eligendi sequi labore magnam voluptate minus ad. Eos facere, dolore saepe optio quasi voluptates laudantium. Alias in quasi repellat vero ad libero maxime expedita explicabo accusamus eligendi perspiciatis laudantium quos optio a nemo debitis iste animi, accusantium dolorem. Assumenda dolorem velit vitae? Soluta aliquam quis voluptate commodi? Vero, assumenda, nemo magnam ad labore architecto odio earum hic temporibus delectus eos optio eligendi nostrum veniam? Dolorum dolores, animi cum quibusdam excepturi tempore et mollitia totam debitis, impedit nam voluptates natus magnam! Eveniet cum distinctio dolorem, animi error libero molestias sunt, voluptas nesciunt culpa laborum voluptatibus sequi dolor ipsam hic sed. Ex, saepe amet suscipit nam accusantium, quaerat molestiae iste deleniti ipsam veritatis quo, voluptatem provident? Dolor, velit doloribus obcaecati quisquam id culpa odio commodi repudiandae voluptatum dolorem iure animi dolorum! Dolor, perferendis laborum quos aut sunt, sapiente molestiae distinctio in nemo culpa reiciendis animi autem quisquam quae ipsam consequuntur, mollitia qui accusamus adipisci esse suscipit tempore sequi quaerat quibusdam? Quia saepe doloremque tempora voluptates in repellat a quae! Cumque quas veritatis cupiditate officiis, vitae ab laborum! Accusamus quibusdam neque praesentium commodi laudantium debitis magni, fuga mollitia, repellendus soluta vero quia laboriosam hic rerum! Debitis corrupti harum libero? Eius ratione accusantium, blanditiis eaque nihil obcaecati deleniti dolores pariatur dolore quo voluptas veritatis. Nisi necessitatibus iure doloribus quod dicta nihil omnis maxime, perspiciatis quaerat quisquam libero architecto corrupti optio vel ipsa incidunt neque aspernatur officiis adipisci. Omnis quas velit molestiae odio, doloribus natus expedita deserunt, voluptatibus quidem animi a hic nulla tenetur laborum repudiandae incidunt porro similique. Neque inventore veritatis, repellendus cum, ipsam doloremque porro esse tempore eaque, sequi qui? Sapiente eos odit, voluptate illum quidem ratione cumque distinctio. Cumque perferendis consequuntur magni optio ratione assumenda odit eos cupiditate totam quidem similique molestias velit, sapiente rerum in qui? Magni quod atque accusamus aliquid ea magnam doloribus sapiente quaerat neque ex inventore deleniti voluptate nam sint fuga voluptatem voluptatum quis corrupti est iure, earum alias! Eligendi laudantium maxime impedit alias magnam a illo placeat. Facilis, eos ipsam, accusantium in accusamus sequi suscipit magnam repellendus animi consectetur expedita earum.</p>
+                <div className={`${themeToggle ? "" : 'dark'} home-container min-h-full px-5 sm:px-10 md:px-20 py-3 md:py-6 bg-[radial-gradient(circle_at_center,#ffae42_0%,#ff4500_100%)] dark:bg-[linear-gradient(black)] `}>
+
+
+                    <h1 className='text-center font-amita flex flex-col gap-1 md:gap-4 text-2xl md:text-6xl mt-22 md:mt-27'><span className='tracking-widest text-secondary-light dark:text-primary animate-pulse-glow'>Welcome to</span> <span className='text-light text-shadow-lg animate-pulse-glow2'>Namoजपं</span></h1>
+                    <section className='main flex flex-col items-center my-10 '>
+                        <select onChange={handleName} name="bhagvanName" id="bhagvanName" className='z-0 cursor-pointer mb-5 outline-none bg-red-800/10 text-light font-bold px-7 py-2 text-center appearance-none bg-[url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%23ffffff%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E)] bg-no-repeat bg-position-[right_3px_center] bg-size-[2rem] rounded-full border-light border' defaultValue={"राधा"}>
+                            {['राधा', 'राम', 'शिव', 'कृष्ण', 'श्याम', 'हरि', 'जय माता दी'].map((name, i) => {
+                                return (
+                                    <option className='bg-orange-500 font-bold text-light' key={i} value={`${name}...`}>{name}</option>
+                                )
+                            })}
+
+                        </select>
+
+                        <div className='circle-outer border-primary border-3 w-[90%] md:w-[80%] lg:w-1/2 h-90 bg-red-800/20 rounded-4xl shadow-[0px_0px_10px] lg:shadow-none lg:hover:shadow-[0px_0px_20px] dark:shadow-white dark:shadow-[0px_0px_20px] dark:lg:shadow-none dark:lg:hover:shadow-[0px_0px_20px] flex flex-col items-center justify-between px-3 lg:px-10 py-10 transition-all duration-500 z-0'>
+                            <ProgressRing count={count} />
+
+                            <div className="btns flex gap-5 transition-all duration-500">
+
+                                <button className='bg-secondary-light text-light px-6 py-2 rounded-full font-bold tracking-wider shadow-[0px_0px_10px_5px] hover:-translate-y-1.5 transition-all duration-500 shadow-light cursor-pointer' onClick={() => { count > 0 ? handleReset() : handlePlaySpeech() }}>{count > 0 ? "Reset" : "Play Now"}</button>
+
+                                {count > 0 ? <button className='bg-secondary-light text-light px-6 py-2 rounded-full font-bold tracking-wider transition-all duration-500 shadow-[0px_0px_10px_5px] hover:-translate-y-1.5  shadow-light cursor-pointer' onClick={() => { pause ? handlePauseSpeech() : handleResumeSpeech() }}>{pause ? 'Pause' : "resume"}</button> : ""}
+                            </div>
+                        </div>
+
+                        <select ref={voiceSelectRef} onChange={handleVoice} hidden></select>
+
+
+                    </section>
                 </div>
             </section>
         </>
