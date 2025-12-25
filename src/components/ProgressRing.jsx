@@ -38,7 +38,7 @@ const ProgressRing = ({ count, targetCount = 108 }) => {
                         transition: 'stroke-dashoffset 0.5s ease-out'
                     }}
                     strokeLinecap="round"
-                    className="text-red-600 "
+                    className="text-red-600 dark:text-white"
                 />
             </svg>
 

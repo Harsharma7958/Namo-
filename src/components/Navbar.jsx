@@ -83,12 +83,12 @@ const Navbar = () => {
                             <hr className={`${menuToggle ? 'rotate-45 absolute top-0' : 'rotate-0'} bg-secondary  transition-all duration-300 dark:bg-primary h-1 w-7 rounded-full`} />
 
                         </div>
-                        <div className={` nav-link-mobile absolute top-0 p-7 w-full bg-[rgba(255,255,255,0.3)] dark:bg-[rgba(0,0,0,0.5)] backdrop-blur-xs min-h-screen max-h-scree  z-40`} ref={menuRef}>
-                            <ul className='flex flex-col gap-4 items-center'>
+                        <div className={` nav-link-mobile absolute top-0 p-10 w-full bg-[rgba(255,255,255,0.3)] dark:bg-[rgba(0,0,0,0.5)] backdrop-blur-xs min-h-screen  z-40`} ref={menuRef}>
+                            <ul className='flex flex-col gap-7 items-center'>
                                 {['home', 'about', 'counter', 'contact', 'developer'].map((element, i) => {
                                     return (
                                         <li key={i}>
-                                            <NavLink className="navlinkEffect opacity-100 hover:text-primary dark:hover:text-light capitalize" onClick={handleMenu} to={element === 'home' ? '/' : `/${element}`}>{element}</NavLink >
+                                            <NavLink className="navlinkEffect opacity-100 hover:text-primary dark:hover:text-light text-xl capitalize" onClick={handleMenu} to={element === 'home' ? '/' : `/${element}`}>{element}</NavLink >
                                         </li>
                                     )
                                 })}
