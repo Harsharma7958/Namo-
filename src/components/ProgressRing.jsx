@@ -45,7 +45,7 @@ const ProgressRing = ({ count, targetCount = 108 }) => {
             {/* Central Count Text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center ">
                 <span className="text-4xl font-bold text-light">{count}</span>
-                <span className="text-sm text-secondary-light">/ {targetCount}</span>
+                <span className="text-sm text-secondary-light dark:text-primary">/ {targetCount}</span>
             </div>
         </div>
     );
