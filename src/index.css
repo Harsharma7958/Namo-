@@ -126,20 +126,20 @@ body {
   content: '';
   width: 30%;
   height: 100%;
-  left: -50%;
   position: absolute;
+  top: 0;
+  left: -50%;
   background: linear-gradient(to right,
       transparent,
       rgba(255, 255, 255, 0.2),
       transparent);
-  animation: float 2s infinite ease-in-out;
+  animation: shine 2s infinite ease-in-out;
 }
 
-@keyframes float {
+@keyframes shine {
   0% {
     transform: translateX(0);
   }
-
 
   100% {
     transform: translateX(500%);
@@ -173,4 +173,43 @@ body {
   }
 }
 
+.aboutContentHeading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  border-radius: 30px;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  height: 3px;
+  margin: 0 auto;
+  animation: animateBorder 0.3s ease-in-out  forwards;
+}
+
+@keyframes animateBorder{
+  0%{
+    width: 0%;
+  }
+  100%{
+    width: 66%;
+  }
+}
+
+
+.icon{
+  animation: heartBeat 3s ease-in-out infinite;
+}
+
+@keyframes heartBeat{
+  0%{
+    scale: 1;
+  }
+  50%{
+    scale: 1.15;
+  }
+  100%{
+    scale: 1;
+  }
+}
 /***** END ABOUT *****/
