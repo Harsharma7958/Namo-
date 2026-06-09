@@ -9,6 +9,10 @@
   --color-secondary: #0D4715;
   --color-secondary-light: #41644A;
   --color-light: #EBE1D1;
+  --color-gold: #FFD700;
+  --text-shadow-textgoldshadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  --shadow-boxgoldshadow: 0 0 20px rgba(255, 215, 0, 0.6);
+
 }
 
 html,
@@ -146,6 +150,16 @@ body {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 
 /**** END Home *****/
 
@@ -184,32 +198,36 @@ body {
   background-color: var(--color-primary);
   height: 3px;
   margin: 0 auto;
-  animation: animateBorder 0.3s ease-in-out  forwards;
+  animation: animateBorder 0.3s ease-in-out forwards;
 }
 
-@keyframes animateBorder{
-  0%{
+@keyframes animateBorder {
+  0% {
     width: 0%;
   }
-  100%{
+
+  100% {
     width: 66%;
   }
 }
 
 
-.icon{
+.icon {
   animation: heartBeat 3s ease-in-out infinite;
 }
 
-@keyframes heartBeat{
-  0%{
+@keyframes heartBeat {
+  0% {
     scale: 1;
   }
-  50%{
+
+  50% {
     scale: 1.15;
   }
-  100%{
+
+  100% {
     scale: 1;
   }
 }
+
 /***** END ABOUT *****/
